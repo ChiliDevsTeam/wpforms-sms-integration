@@ -4,18 +4,19 @@
  *
  * Manage all admin related functionality
  *
- * @package Chilidevs\WpFormSms
+ * @package ChiliDevs\WpFormSms
  */
 
 declare(strict_types=1);
 
-namespace Chilidevs\WpFormSms\Admin;
+namespace ChiliDevs\WpFormSms\Admin;
 
-use  Chilidevs\WpFormSms\Admin\SettingsAPI;
+use  ChiliDevs\WpFormSms\Admin\SettingsAPI;
+use function ChiliDevs\WpFormSms\plugin;
 /**
  * Admin class.
  *
- * @package Chilidevs\WpFormSms\Admin
+ * @package ChiliDevs\WpFormSms\Admin
  */
 class Admin {
 	/**
@@ -36,8 +37,23 @@ class Admin {
 		$this->settings_api = new SettingsAPI();
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
 		add_action( 'admin_menu', [ $this, 'load_menu' ], 12 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_action( 'chili_settings_form_bottom_wpforms_sms_settings', [ $this, 'settings_gateway_fields' ] );
 	}
 
+	/**
+	 * Enqueue admin scripts
+	 *
+	 * Allows plugin assets to be loaded.
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_enqueue_scripts() {
+		wp_enqueue_script( 'admin-wpforms-sms-scripts', plugin()->assets_dir . '/build/js/admin.build.js', array( 'jquery' ), false, true );
+		wp_localize_script( 'admin-wpforms-sms-scripts', 'wcmessagemedia', array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		) );
+	}
 	/**
 	 * Initialize the settings.
 	 *
@@ -157,29 +173,33 @@ class Admin {
 	 * @return void|HTML
 	 */
 	public function settings_gateway_fields() {
+		// Nexomo Properties.
 		$nexmo_api        = wpforms_sms_get_option( 'nexmo_api', 'wpforms_sms_settings', '' );
 		$nexmo_api_secret = wpforms_sms_get_option( 'nexmo_api_secret', 'wpforms_sms_settings', '' );
 		$nexmo_from_name  = wpforms_sms_get_option( 'nexmo_from_name', 'wpforms_sms_settings', '' );
-
 		$nexmo_helper = sprintf( __( 'Enter your Vonage(Nexmo) details. Please visit <a href="%s" target="_blank">%s</a> and get your api keys and options', 'wp-form-sms' ), 'https://dashboard.nexmo.com/login', 'Nexmo' );
+
+		// Clicksend properties.
+		$clicksend_username = wpforms_sms_get_option( 'clicksend_username', 'wpforms_sms_settings', '' );
+		$clicksend_api      = wpforms_sms_get_option( 'clicksend_api', 'wpforms_sms_settings', '' );
+		$clicksend_helper = sprintf( __( 'Enter ClickSend details. Please visit <a href="%s" target="_blank">%s</a> and get your username and api keys', 'wp-form-sms' ), 'https://dashboard.clicksend.com/signup', 'Clicksend' );
+
 		?>
 
-		<?php do_action( 'wpforms_gateway_settings_options_before' ); ?>
-
+		<!-- start nexomo block -->
 		<div class="nexmo_wrapper hide_class">
 			<hr>
 			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
-				<strong><?php echo wp_kses_post( $nexmo_helper ); ?></strong>
+			<strong><?php echo wp_kses_post( $nexmo_helper ); ?></strong>
 			</p>
 			<table class="form-table">
 				<tr valign="top">
-					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API', 'wp-form-sms' ) ?></th>
+				<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API', 'wp-form-sms' ) ?></th>
 					<td>
-						<input type="text" class="regular-text" name= wpforms_sms_settings[nexmo_api]" id="wpforms_sms_settings[nexmo_api]" value="<?php echo esc_attr( $nexmo_api ); ?>">
+						<input type="text" class="regular-text" name="wpforms_sms_settings[nexmo_api]" id="wpforms_sms_settings[nexmo_api]" value="<?php echo esc_attr( $nexmo_api ); ?>">
 						<p class="description"><?php esc_html_e( 'Enter Vonage(Nexmo) API key', 'wp-form-sms' ); ?></p>
 					</td>
 				</tr>
-
 				<tr valign="top">
 					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API Secret', 'wp-form-sms' ) ?></th>
 					<td>
@@ -187,7 +207,6 @@ class Admin {
 						<p class="description"><?php esc_html_e( 'Enter Vonage(Nexmo) API secret', 'wp-form-sms' ); ?></p>
 					</td>
 				</tr>
-
 				<tr valign="top">
 					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) From Name', 'wp-form-sms' ) ?></th>
 					<td>
@@ -195,16 +214,37 @@ class Admin {
 						<p class="description"><?php esc_html_e( 'From which name the message will be sent to the users ( Default : VONAGE )', 'wp-form-sms' ); ?></p>
 					</td>
 				</tr>
+			</table>
+		</div>
+		<!-- End nexomo block -->
+
+		<!-- Start clicksend Block -->
+		<div class="clicksend_wrapper hide_class">
+			<hr>
+			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
+				<strong><?php echo wp_kses_post( $clicksend_helper ); ?></strong>
+			</p>
+			<table class="form-table">
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'ClickSend Username', 'wp-form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="wpforms_sms_settings[clicksend_username]" id="wpforms_sms_settings[clicksend_username]" value="<?php echo esc_attr( $clicksend_username ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter ClickSend Username', 'wp-form-sms' ); ?></p>
+					</td>
+				</tr>
+
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'ClickSend API key', 'wp-form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="wpforms_sms_settings[clicksend_api]" id="wpforms_sms_settings[clicksend_api]" value="<?php echo esc_attr( $clicksend_api ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter ClickSend API', 'wp-form-sms' ); ?></p>
+					</td>
+				</tr>
 
 			</table>
 
-			<?php do_action( 'wpforms_gateway_fields_after' ); ?>
 		</div>
-		<!-- starting clicksend div -->
+		<!-- End Clicksend Block -->
 		<?php
-
-		do_action( 'wpforms_gateway_settings_options_after' );
 	}
-
-
 }

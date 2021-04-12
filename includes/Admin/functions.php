@@ -4,10 +4,11 @@
  *
  * Manage  FormSettings related functionality on Wp Form
  *
- * @package Chilidevs\WpFormSms
+ * @package ChiliDevs\WpFormSms
  */
 
 declare(strict_types=1);
+
 /**
  * Get option value for settings
  *
@@ -34,13 +35,10 @@ function wpforms_sms_get_option( $option, $section, $default = '' ) {
 	 *
 	 * @return array
 	 */
-function cf7_sms_class_mapping( $class_name = '' ) {
+function wpforms_sms_class_mapping( $class_name = '' ) {
 	$classes = apply_filters( 'wpforms_sms_class_map', [
-		'nexmo' => Chilidevs\WpFormSms\Gateways\Vonage::class,
+		'nexmo'     => ChiliDevs\WpFormSms\Gateways\Vonage::class,
+		'clicksend' => ChiliDevs\WpFormSms\Gateways\ClickSend::class,
 	] );
 	return isset( $classes[ $class_name ] ) ? $classes[ $class_name ] : '';
 }
-
-
-
-

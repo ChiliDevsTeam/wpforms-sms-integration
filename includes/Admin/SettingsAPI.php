@@ -4,12 +4,12 @@
  *
  * Manage SettingsAPI related functionality
  *
- * @package Chilidevs\WpFormSms
+ * @package ChiliDevs\WpFormSms
  */
 
 declare(strict_types=1);
 
-namespace Chilidevs\WpFormSms\Admin;
+namespace ChiliDevs\WpFormSms\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,7 +18,7 @@ if ( ! class_exists( 'SettingsAPI' ) ) :
 	/**
 	 * SettingsAPI class.
 	 *
-	 * @package Chilidevs\WpFormSms\Admin
+	 * @package ChiliDevs\WpFormSms\Admin
 	 */
 	class SettingsAPI {
 		/**
@@ -653,6 +653,9 @@ if ( ! class_exists( 'SettingsAPI' ) ) :
 			<style>
 				.chili-settings-wrap {
 					margin-top: 20px;
+				}
+				.wrap {
+						margin: 10px 20px 0 35px;
 				}
 				.chili-settings-wrap .dashicons {
 					padding-top: 2px;

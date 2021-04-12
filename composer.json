@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Chilidevs\\WpFormSms\\": "includes/"
+            "ChiliDevs\\WpFormSms\\": "includes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Chilidevs\\WpFormSms\\Tests\\": "tests/php"
+            "ChiliDevs\\WpFormSms\\Tests\\": "tests/php"
         }
     },
     "scripts": {
@@ -29,5 +29,9 @@
             "@cs",
             "@tests"
         ]
+    },
+    "require": {
+        "clicksend/clicksend-php": "^5.0",
+        "vonage/client": "^2.4"
     }
 }

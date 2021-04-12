@@ -1,17 +1,17 @@
 <?php
 /**
 Plugin Name: SMS integration for WP Form
-Plugin URI: https://chilidevs.com
+Plugin URI: https://ChiliDevs.com
 Description: This plugin is for WP Form Sms integration
 Version: 1.0.0
-Author: chilidevs
-Author URI: http://chilidevs.com/
+Author: ChiliDevs
+Author URI: http://ChiliDevs.com/
 Text Domain: wp-form-sms
 License: GPL2
 */
 
 /**
- * Copyright (c) YEAR chilidevs (email: info@chilidevs.com). All rights reserved.
+ * Copyright (c) YEAR ChiliDevs (email: info@ChiliDevs.com). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -38,7 +38,7 @@ License: GPL2
 
 declare(strict_types=1);
 
-namespace Chilidevs\WpFormSms;
+namespace ChiliDevs\WpFormSms;
 
 // don't call the file directly.
 if ( ! defined( 'ABSPATH' ) ) {

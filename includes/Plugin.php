@@ -2,21 +2,21 @@
 /**
  * Main plugin class.
  *
- * @package Chilidevs\WpFormSms
+ * @package ChiliDevs\WpFormSms
  * @since 1.0.0
  */
 
 declare(strict_types=1);
 
-namespace Chilidevs\WpFormSms;
+namespace ChiliDevs\WpFormSms;
 
-use Chilidevs\WpFormSms\Admin\Admin;
-use  Chilidevs\WpFormSms\Admin\FormSettings;
+use ChiliDevs\WpFormSms\Admin\Admin;
+use  ChiliDevs\WpFormSms\Admin\FormSettings;
 
 /**
  * Class Plugin.
  *
- * @package Chilidevs\WpFormSms
+ * @package ChiliDevs\WpFormSms
  */
 class Plugin {
 
@@ -56,7 +56,8 @@ class Plugin {
 	public function run(): void {
 		$this->path       = dirname( __FILE__, 2 );
 		$this->url        = plugin_dir_url( trailingslashit( dirname( __FILE__, 2 ) ) . 'wp-form-sms.php' );
-		$this->assets_dir = trailingslashit( $this->path ) . 'assets/';
+		$this->assets_dir = trailingslashit( $this->url ) . 'assets/';
+		require_once $this->path . '/includes/Admin/functions.php';
 		new Admin();
 		new FormSettings();
 	}

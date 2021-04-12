@@ -1,25 +1,14 @@
-import 'css/Admin/Admin.scss';
+window.$ = window.$ || jQuery;
 export const { domReady } = wp;
-
-/**
- * Run the script when dom is ready.
- */
 domReady( () => {
-	console.log( 'Hello world' );
-} );
-
-;(function($) {
 	// Gateway select change event
-	$('.hide_class').hide();
-
-    $('#cf7_sms_settings\\[sms_gateway\\]').on( 'change', function() {
-		var self = $(this),
-			value = self.val();
-		$('.hide_class').hide();
-		$('.'+value+'_wrapper').fadeIn();
-	});
-
+	$( '.hide_class' ).hide();
+	$( '#wpforms_sms_settings\\[sms_gateway\\]' ).on( 'change', function() {
+		const self = $( this );
+		const value = self.val();
+		$( '.hide_class' ).hide();
+		$( '.' + value + '_wrapper' ).fadeIn();
+	} );
 	// Trigger when a change occurs in gateway select box
-    $('#cf7_sms_settings\\[sms_gateway\\]').trigger('change');
-
-})(jQuery);
+	$( '#wpforms_sms_settings\\[sms_gateway\\]' ).trigger( 'change' );
+} );

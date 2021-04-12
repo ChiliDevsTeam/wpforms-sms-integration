@@ -1,5 +1,5 @@
 === SMS integration for WP Form ===
-Contributors: chilidevs
+Contributors: ChiliDevs
 Tags: WooCommerce, wc
 Requires at least: 4.4
 Tested up to: 5.7
@@ -19,7 +19,7 @@ Here is your sample description for plugin
 If you find bugs, plase make issues on Github. Any pull requests are welcomed.
 
 = Author =
-Created by [chilidevs](https://chilidevs.com)
+Created by [ChiliDevs](https://ChiliDevs.com)
 
 == Installation ==
 

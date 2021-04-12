@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"slug": "wp-form-sms",
 	"description": "This plugin is for WP Form Sms integration",
-	"author": "chilidevs",
+	"author": "ChiliDevs",
 	"license": "GPL",
 	"private": true,
 	"scripts": {
